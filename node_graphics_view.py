@@ -11,7 +11,7 @@ class NodeEditorGraphicsView(QGraphicsView):
         self.setScene(self.scene)
         self.zoomInFactor = 1.25
         self.zoomClamp = True
-        self.zoom = 5
+        self.zoom = 10
         self.zoomStep = 1
         self.zoomRange = [0, 10]
 
@@ -91,7 +91,7 @@ class NodeEditorGraphicsView(QGraphicsView):
             self.zoom += self.zoomStep
         else:
             zoomFactor = zoomOutFactor
-            self.zoom -= zoomFactor
+            self.zoom -= self.zoomStep
 
         clamped = False
         if self.zoom < self.zoomRange[0]: self.zoom, clamped = self.zoomRange[0], True
