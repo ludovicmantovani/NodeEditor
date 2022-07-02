@@ -2,14 +2,15 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-from node_graphics_scene import NodeGraphicsScene
 from node_graphics_view import NodeEditorGraphicsView
+from node_scene import Scene
 
 
 class NodeEditorWindow(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        self.scene = None
         self.grScene = None
         self.layout = None
         self.view = None
@@ -22,8 +23,9 @@ class NodeEditorWindow(QWidget):
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
 
-        # Create graphics scene
-        self.grScene = NodeGraphicsScene()
+        # Create scene
+        self.scene = Scene()
+        self.grScene = self.scene.grScene
 
         # Create graphics view
         self.view = NodeEditorGraphicsView(self.grScene, self)
