@@ -1,7 +1,7 @@
 from node_graphics_scene import NodeGraphicsScene
 
 
-class Scene:
+class Scene():
     def __init__(self):
         self.grScene = None
         self.nodes = []

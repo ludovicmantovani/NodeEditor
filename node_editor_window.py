@@ -3,6 +3,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 from node_graphics_view import NodeEditorGraphicsView
+from node_node import Node
 from node_scene import Scene
 
 
@@ -27,6 +28,8 @@ class NodeEditorWindow(QWidget):
         self.scene = Scene()
         self.grScene = self.scene.grScene
 
+        node = Node(self.scene, "My Awesome Node")
+
         # Create graphics view
         self.view = NodeEditorGraphicsView(self.grScene, self)
         self.layout.addWidget(self.view)
@@ -34,7 +37,7 @@ class NodeEditorWindow(QWidget):
         self.setWindowTitle("Node Editor")
         self.show()
 
-        self.addDebugContent()
+        # self.addDebugContent()
 
     def addDebugContent(self):
         greenBrush = QBrush(Qt.green)
