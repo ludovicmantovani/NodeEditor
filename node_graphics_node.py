@@ -4,8 +4,11 @@ from PyQt5.QtWidgets import *
 
 
 class NodeGraphicsNode(QGraphicsItem):
-    def __init__(self, node, title="Node Graphics Item", parent=None):
+    def __init__(self, node, parent=None):
         super().__init__(parent)
+
+        self.node = node
+        self.content = self.node.content
 
         self._title_color = Qt.white
         self._title_font = QFont("Ubuntu, 10")
@@ -23,7 +26,9 @@ class NodeGraphicsNode(QGraphicsItem):
         self._brush_background = QBrush(QColor("#E3212121"))
 
         self.initTitle()
-        self.title = title
+        self.title = self.node.title
+
+        self.initContent()
 
         self.initUI()
 
@@ -115,3 +120,13 @@ class NodeGraphicsNode(QGraphicsItem):
         painter.setPen(self._pen_default if not self.isSelected() else self._pen_selected)
         painter.setBrush(Qt.NoBrush)
         painter.drawPath(path_outline.simplified())
+
+    def initContent(self):
+        self.grContent = QGraphicsProxyWidget(self)
+        self.content.setGeometry(
+            self.edge_size,
+            self.title_height + self.edge_size,
+            self.width - 2*self.edge_size,
+            self.height -2*self.edge_size - self.title_height
+        )
+        self.grContent.setWidget(self.content)

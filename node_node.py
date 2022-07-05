@@ -1,3 +1,4 @@
+from node_content_widget import NodeContentWidget
 from node_graphics_node import NodeGraphicsNode
 
 
@@ -6,8 +7,8 @@ class Node():
         self.scene = scene
 
         self.title = title
-
-        self.grNode = NodeGraphicsNode(self, self.title)
+        self.content = NodeContentWidget()
+        self.grNode = NodeGraphicsNode(self)
 
         self.scene.addNode(self)
         self.scene.grScene.addItem(self.grNode)
