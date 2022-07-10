@@ -2,9 +2,9 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+from node_edge import *
 from node_graphics_view import NodeEditorGraphicsView
 from node_node import Node
-from node_socket import Socket
 from node_scene import Scene
 
 
@@ -28,12 +28,7 @@ class NodeEditorWindow(QWidget):
         self.scene = Scene()
         self.grScene = self.scene.grScene
 
-        node = Node(
-            self.scene,
-            "My Awesome Node",
-            inputs=[1, 2, 3],
-            outputs=[1],
-        )
+        self.addNodes()
 
         # Create graphics view
         self.view = NodeEditorGraphicsView(self.grScene, self)
@@ -76,3 +71,30 @@ class NodeEditorWindow(QWidget):
         file.open(QFile.ReadOnly | QFile.Text)
         stylesheet = file.readAll()
         QApplication.instance().setStyleSheet(str(stylesheet, encoding="utf-8"))
+
+    def addNodes(self):
+        node1 = Node(
+            self.scene,
+            "My Awesome Node 1",
+            inputs=[1, 2, 3],
+            outputs=[1],
+        )
+        node2 = Node(
+            self.scene,
+            "My Awesome Node 2",
+            inputs=[1, 2, 3],
+            outputs=[1],
+        )
+        node3 = Node(
+            self.scene,
+            "My Awesome Node 3",
+            inputs=[1, 2, 3],
+            outputs=[1],
+        )
+
+        node1.setPosition(-350, -250)
+        node2.setPosition(-75, 0)
+        node3.setPosition(200, -150)
+
+        edge1 = Edge(self.scene, node1.outputs[0], node2.inputs[0])
+        edge2 = Edge(self.scene, node2.outputs[0], node3.inputs[0], type=EDGE_TYPE_BEZIER)
