@@ -32,6 +32,7 @@ class Node:
     @property
     def pos(self):
         return self.grNode.pos()
+
     def setPosition(self, x, y):
         self.grNode.setPos(x, y)
 
@@ -47,4 +48,4 @@ class Node:
             # start from top
             y = self.grNode.title_height + self.grNode._padding + self.grNode.edge_size + index * self.socket_spacing
 
-        return x, y
+        return [x, y]
