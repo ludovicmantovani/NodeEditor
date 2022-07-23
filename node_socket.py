@@ -27,3 +27,6 @@ class Socket:
 
     def setConnectedEdge(self, edge=None):
         self.edge = edge
+
+    def hasEdge(self):
+        return self.edge is not None

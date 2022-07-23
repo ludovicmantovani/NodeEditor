@@ -96,5 +96,5 @@ class NodeEditorWindow(QWidget):
         node2.setPosition(-75, 0)
         node3.setPosition(200, -150)
 
-        edge1 = Edge(self.scene, node1.outputs[0], node2.inputs[0])
-        edge2 = Edge(self.scene, node2.outputs[0], node3.inputs[0], type=EDGE_TYPE_BEZIER)
+        edge1 = Edge(self.scene, node1.outputs[0], node2.inputs[0], edge_type=EDGE_TYPE_BEZIER)
+        edge2 = Edge(self.scene, node2.outputs[0], node3.inputs[0], edge_type=EDGE_TYPE_BEZIER)
