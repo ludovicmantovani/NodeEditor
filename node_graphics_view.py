@@ -2,10 +2,18 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QGraphicsView
 
+from node_graphics_socket import GraphicsSocket
+
+MODE_NOOP = 1
+MODE_EDGE_DRAG = 2
+
+EDGE_DRAG_START_THRESHOLD = 10
+
 
 class NodeEditorGraphicsView(QGraphicsView):
     def __init__(self, scene, parent=None):
         super().__init__(parent)
+        self.mode = MODE_NOOP
         self.scene = scene
         self.initUI()
         self.setScene(self.scene)
@@ -70,10 +78,31 @@ class NodeEditorGraphicsView(QGraphicsView):
         self.setDragMode(QGraphicsView.NoDrag)
 
     def leftMouseButtonPress(self, event):
-        return super().mousePressEvent(event)
+
+        item = self.getItemAtClick(event)
+
+        self.last_lmb_click_scene_pos = self.mapToScene(event.pos())
+        if type(item) is GraphicsSocket:
+            if self.mode == MODE_NOOP:
+                self.mode = MODE_EDGE_DRAG
+                self.edgeDragStart(item)
+                return
+
+        if self.mode == MODE_EDGE_DRAG:
+            res = self.edgeDragEnd(item)
+            if res: return
+
+        super().mousePressEvent(event)
 
     def leftMouseButtonRelease(self, event):
-        return super().mouseReleaseEvent(event)
+
+        item = self.getItemAtClick(event)
+
+        if self.mode == MODE_EDGE_DRAG:
+            if self.distanceBetweenClickAndReleaseIsOff(event):
+                res = self.edgeDragEnd(item)
+                if res: return
+        super().mouseReleaseEvent(event)
 
     def rightMouseButtonPress(self, event):
         return super().mousePressEvent(event)
@@ -100,3 +129,28 @@ class NodeEditorGraphicsView(QGraphicsView):
         # set scene scale
         if not clamped or self.zoomClamp is False:
             self.scale(zoomFactor, zoomFactor)
+
+    def getItemAtClick(self, event):
+        pos = event.pos()
+        obj = self.itemAt(pos)
+        return obj
+
+    def edgeDragStart(self, item):
+        print('Start dragging edge')
+        print('   assign Start Socket')
+
+    def edgeDragEnd(self, item):
+        self.mode = MODE_NOOP
+        print('End dragging edge')
+
+        if type(item) == GraphicsSocket:
+            print(' assign End Socket')
+            return True
+
+        return False
+
+    def distanceBetweenClickAndReleaseIsOff(self, event):
+        new_lmb_release_scene_pos = self.mapToScene(event.pos())
+        dist_scene = new_lmb_release_scene_pos - self.last_lmb_click_scene_pos
+        dist = dist_scene.x() * dist_scene.x() + dist_scene.y() * dist_scene.y()
+        return dist > EDGE_DRAG_START_THRESHOLD * EDGE_DRAG_START_THRESHOLD
