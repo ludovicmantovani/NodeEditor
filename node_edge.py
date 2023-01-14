@@ -1,4 +1,4 @@
-from node_graphics_edge import *
+from graphics.node_graphics_edge import *
 
 EDGE_TYPE_DIRECT = 1
 EDGE_TYPE_BEZIER = 2
@@ -17,6 +17,13 @@ class Edge:
         self.grEdge = GraphicsEdgeDirect(self) if edge_type == EDGE_TYPE_DIRECT else GraphicsEdgeBezier(self)
         self.updatePositions()
         self.scene.grScene.addItem(self.grEdge)
+        self.scene.addEdge(self)
+
+    def __str__(self):
+        return "<Edge {}..{}>".format(
+            hex(id(self))[2:5],
+            hex(id(self))[-3:]
+        )
 
     def updatePositions(self):
         source_pos = self.start_socket.getSocketPosition()
