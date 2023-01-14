@@ -3,7 +3,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 from node_edge import *
-from node_graphics_view import NodeEditorGraphicsView
+from graphics.node_graphics_view import NodeEditorGraphicsView
 from node_node import Node
 from node_scene import Scene
 
@@ -76,19 +76,19 @@ class NodeEditorWindow(QWidget):
         node1 = Node(
             self.scene,
             "My Awesome Node 1",
-            inputs=[0, 2, 3],
+            inputs=[0, 0, 0],
             outputs=[1],
         )
         node2 = Node(
             self.scene,
             "My Awesome Node 2",
-            inputs=[0, 4, 5],
+            inputs=[3, 3, 3],
             outputs=[1],
         )
         node3 = Node(
             self.scene,
             "My Awesome Node 3",
-            inputs=[0, 0, 2],
+            inputs=[2, 2, 2],
             outputs=[1],
         )
 

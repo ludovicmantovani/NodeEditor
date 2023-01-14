@@ -1,4 +1,4 @@
-from node_graphics_scene import NodeGraphicsScene
+from graphics.node_graphics_scene import NodeGraphicsScene
 
 
 class Scene():

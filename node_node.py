@@ -1,5 +1,5 @@
 from node_content_widget import NodeContentWidget
-from node_graphics_node import NodeGraphicsNode
+from graphics.node_graphics_node import NodeGraphicsNode
 from node_socket import *
 
 
@@ -28,6 +28,12 @@ class Node:
             socket = Socket(node=self, index=counter, position=RIGHT_TOP, socket_type=item)
             counter += 1
             self.outputs.append(socket)
+
+    def __str__(self):
+        return "<Node {}..{}>".format(
+            hex(id(self))[2:5],
+            hex(id(self))[-3:]
+        )
 
     @property
     def pos(self):
