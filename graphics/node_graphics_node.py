@@ -15,9 +15,9 @@ class NodeGraphicsNode(QGraphicsItem):
 
         self.height = 240
         self.width = 180
-        self.edge_size = 10.0
-        self.title_height = 24.0
-        self._padding = 4.0
+        self.edge_size = 10
+        self.title_height = 24
+        self._padding = 4
 
         self._pen_default = QPen(QColor("#7F000000"))
         self._pen_selected = QPen(QColor("#FFFFA637"))
