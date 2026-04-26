@@ -8,7 +8,7 @@ from node_node import Node
 from node_scene import Scene
 
 
-class NodeEditorWindow(QWidget):
+class NodeEditorWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
